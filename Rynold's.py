@@ -1,3 +1,4 @@
+#book: incropera Appendix A.4
 co=[
 {"temp":200 ,"Density" :1.6888 ,"Cp":1.045 ,"Vis":127 ,"kyn_vis":7.52 ,"conductivity":17.0 ,"diff":9.63 ,"Pr":0.781},
 {"temp":220 ,"Density" :1.5341 ,"Cp":1.044 ,"Vis":137 ,"kyn_vis":8.93 ,"conductivity":19.0 ,"diff":11.9,"Pr": 0.753},
