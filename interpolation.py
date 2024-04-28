@@ -1,8 +1,6 @@
 # Interpolation is important method to use
 # with experimental data.
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import *
 
 #Entering X and Y values
 class Interp(object):
