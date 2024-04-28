@@ -138,3 +138,7 @@ o2=[{'temp':100,'Density':3.945,'Cp':0.962,'Vis':76.4,'kyn_vis':1.94,'conductivi
 {'temp':200,'Density':1.930,'Cp':0.915,'Vis':147.5,'kyn_vis':7.64,'conductivity':18.3,'diff':10.4,'Pr':0.737,},
 {'temp':250,'Density':1.542,'Cp':0.915,'Vis':178.6,'kyn_vis':11.58,'conductivity':22.6,'diff':16.0,'Pr':0.723,},
 {'temp':300,'Density':1.284,'Cp':0.920,'Vis':207.2,'kyn_vis':16.14,'conductivity':26.8,'diff':22.7,'Pr':0.711,},]
+
+class RynoldNumber(object):
+    def __init__(self,u_infinity,):
+        self.Value=0
