@@ -19,8 +19,10 @@ class RynoldNumber(object):
         self.pd=pd.DataFrame(properties[Gas])
         self.Value=0
  
+        #Calculate Prandtl number its an independent dimentionless of pressure so we will calculate it with respect to temperature
+        Prandtl=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['Pr'].to_list())
+        self.Pr=Prandtl.newton_interpol(temp)[0]
         
-
         # getting the viscosity by newton interpolation
         Viscosity=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['kyn_vis'].to_list())
         self.Vis=Viscosity.newton_interpol(temp)[0]
@@ -38,11 +40,11 @@ class RynoldNumber(object):
             d2=(p2/p1)*d1 #PV=MRT
             self.Vis=vis/d2 
     
-    def Calculate(self,u_infinity:float,length):
+    def Calculate(self,u_infinity:float,length)->list[float,float]:
         """
         U infinity is the velocity of the fluid in m/s
         length: if flat plate then its the actual length of the plate parallel to the streamline of the flow, if a pipe then it is the diameter
         """
         self.Value = (u_infinity*length)/self.Vis
-        return self.Value
+        return [self.Value,self.Pr]
     
