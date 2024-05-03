@@ -1,5 +1,15 @@
 from Rynolds import RynoldNumber
 
+def Grashof_number(Temp_infinity:float,Temp_surface:float,Surface_Area,Volume,Vis)->float:
+    """
+    Grashof for a free convection case
+    Temperatre in kelvine
+    """
+    Lc=Volume/Surface_Area
+    b=2/(Temp_infinity+Temp_surface)
+    Gr=9.81*b*(Temp_surface-Temp_infinity)*(Lc**3)/Vis
+    return Gr
+
 
 class NusseltNumber(object):
 
@@ -40,4 +50,44 @@ class NusseltNumber(object):
             M=0.805
         Nu=C*(rynolds[0]**M)*(rynolds[1]**(1/3))
         return Nu
+    
+    def free_convection_vertical_plate(self,Temp_infinity:float,Temp_surface:float,Surface_Area,Volume):
+        vis=self.rynolds.Vis
+        Gr=Grashof_number(Temp_infinity,Temp_surface,Surface_Area,Volume,vis)
+        Rayleigh=Gr*self.rynolds.Pr
         
+        if Rayleigh<10**9:
+            Nu=  0.68 + (0.670*(Rayleigh**0.25)/((1 + ((0.492/self.rynolds.Pr)**9/16))**4/9)) # Slightly better accuracy for laminar flow
+
+        elif Rayleigh>10**9:
+            Nu = (0.825 + (0.387*(Rayleigh**(1/6))/((1 + ((0.492/self.rynolds.Pr)**9/16))**(8/27))))**2
+
+        return Nu
+    
+        
+    def free_convection_horizantal_and_inclined_plate_hottop(self,Temp_infinity:float,Temp_surface:float,Surface_Area,Volume): 
+        """
+        Upper Surface of Hot Plate or Lower Surface of Cold Plate
+        """
+        vis=self.rynolds.Vis
+        Gr=Grashof_number(Temp_infinity,Temp_surface,Surface_Area,Volume,vis)
+        Rayleigh=Gr*self.rynolds.Pr
+
+        if Rayleigh<=10**7 and Rayleigh >= 10**4:
+            Nu=0.5 * Rayleigh**0.25 # Equation 9.30
+        elif Rayleigh<=10**11 and Rayleigh >= 10**7:
+            Nu=0.15 * Rayleigh**(1/3) # Equation 9.31
+        return Nu
+
+    def free_convection_horizantal_and_inclined_plate_coldtop(self,Temp_infinity:float,Temp_surface:float,Surface_Area,Volume): 
+        """
+        Lower Surface of Hot Plate or Upper Surface of Cold Plate
+        """
+        vis=self.rynolds.Vis
+        Gr=Grashof_number(Temp_infinity,Temp_surface,Surface_Area,Volume,vis)
+        Rayleigh=Gr*self.rynolds.Pr
+
+        Nu=0.52 *Rayleigh**(1/5) # Equation 9.32
+        return Nu
+    
+    
