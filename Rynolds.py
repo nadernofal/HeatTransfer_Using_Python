@@ -21,20 +21,20 @@ class RynoldNumber(object):
  
         #Calculate Prandtl number its an independent dimentionless of pressure so we will calculate it with respect to temperature
         Prandtl=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['Pr'].to_list())
-        self.Pr=Prandtl.newton_interpol(temp)[0]
+        self.Pr=Prandtl.newton_interpol([temp])[0]
         
         # getting the viscosity by newton interpolation
         Viscosity=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['kyn_vis'].to_list())
-        self.Vis=Viscosity.newton_interpol(temp)[0]
+        self.Vis=Viscosity.newton_interpol([temp])[0]
 
         if pressure_considered:
                 
             # getting the viscosity by newton interpolation
             dynb_Viscosity=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['vis'].to_list())
-            vis=dynb_Viscosity.newton_interpol(temp)[0]
+            vis=dynb_Viscosity.newton_interpol([temp])[0]
 
             density1=Interp(Xaxis=self.pd['temp'].to_list(),Yaxis=self.pd['Density'].to_list())
-            d1=density1.newton_interpol(temp)[0]
+            d1=density1.newton_interpol([temp])[0]
             p1=1*10**5
             p2=pressure
             d2=(p2/p1)*d1 #PV=MRT
